@@ -57,6 +57,14 @@ contract enumerable is ERC721 {
         // Search through index and return the token index, to keep track
         return _allTokens[index]; 
     }
+    
+    /*
+    This is an optional but recommended function. 
+    Each owner can own more than one NFT at the same time. 
+    Its unique ID identifies every NFT, and eventually, it can become difficult to keep track of IDs. 
+    So the contract stores these IDs in an array and the tokenOfOwnerByIndex 
+    function lets us retrieve this information from the array.
+    */
     //return owner by the index
     function tokenOfOwnerByIndex(address owner, uint index) public view returns(uint256){
         // check the index against the ERC721 BalanceOf function
@@ -75,6 +83,8 @@ contract enumerable is ERC721 {
 
     }
 
-
+    function _burn2() internal virtual {
+        _allTokens.pop();
+    }
 
 }

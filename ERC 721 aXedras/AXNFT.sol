@@ -23,6 +23,11 @@ contract NFTaXedras is connector {
         _AXNFTzExists[_GoldNFT] =true;
     }
 
+    function burn(uint256 _tokenId) public {
+        _burn(_tokenId);
+        _burn2();
+    }
+
 //initialize this contract to inherit name and symbol form erc721metadata so that the name is goldnft and the symbol is AXNFT
     constructor () connector("GoldNFT", "AXNFT") {
 

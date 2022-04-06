@@ -119,7 +119,7 @@ contract ERC721 {
         return _tokenApprovals[_tokenId];
     }
 
-
+/// This function grants or approves another entity the permission to transfer tokens on the owner’s behalf.
     // 1. require that the person approving is the owner 
     // 2. approve an address to a token (tokenId)
     // 3. require that we cant approve sending tokens of the owner to the owner 
@@ -213,15 +213,12 @@ contract ERC721 {
         safeTransferFrom(_from, _to, _tokenId, "");
     }
 
-    function burn(uint256 tokenId) public virtual {
+    function _burn(uint256 tokenId) internal virtual {
         address owner = ERC721.ownerOf(tokenId);
-
         // Clear approvals
         approve(address(0), tokenId);
-
         _OwnedTokensCount[owner] -= 1;
         delete _tokenOwner[tokenId];
-
         emit Transfer(owner, address(0), tokenId);
     }
 
