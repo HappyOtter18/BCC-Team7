@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.9;
 
+// The market place Smart Contract, the main Smart contract 
+
 import './connector.sol';
 
 contract NFTaXedras is connector {
