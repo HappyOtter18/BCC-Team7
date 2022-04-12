@@ -20,7 +20,7 @@ This is the contract that links all the sub-contracts together. This is for ease
 The basic information needed to deploy the NFT contract is stored here. 
 
 4. ERC721
-This contract implements the function to mine tokens but also all necessary standard functions of the ERC-721. 
+This contract implements the function to mint tokens but also all necessary standard functions of the ERC-721. 
 
 5. Enumerable
 This contract keeps track of all the NFTs, so we can know what all the supply is, who has which token, etc... 
