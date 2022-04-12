@@ -9,18 +9,41 @@ contract NFTaXedras is connector {
 
     // Array that keep track of the minted NFT 
     string[] public AXNFTz;
+    string[] public aXedrasUniqueId;
+    string[] public finess;
+    uint256[] public weight;
+    string[] public provenance;
+    string[] public material;
+    string[] public certification;
     //check if an ID already exist
     mapping(string => bool) _AXNFTzExists;
 
 // This function will make an array of the NFT already minted
 // Mint NFT to adresses and keep track of the adresses who mint the NFTs. 
 //The other mint funtion, we don't have access directly, this is internal
-    function mint(string memory _GoldNFT) public {
-        require(!_AXNFTzExists[_GoldNFT], "error, this NFT already exists"); //We can't mint two same NFTs
-        AXNFTz.push(_GoldNFT);
+    function mint(string memory _url, string memory _aXedrasuniqueId, string memory _finess, uint256 _weightGramms, string memory _provenance, string memory _material, string memory _certification) public {
+        require(!_AXNFTzExists[_url], "error, this NFT already exists"); //We can't mint two same NFTs
+        AXNFTz.push(_url);
+        aXedrasUniqueId.push(_aXedrasuniqueId);
+        finess.push(_finess);
+        weight.push(_weightGramms);
+        provenance.push(_provenance);
+        material.push(_material);
+        certification.push(_certification);
         uint _id = AXNFTz.length -1;
         _mint(msg.sender, _id); //we get an id for each token. The msg.sender is our adress (the one that interact). 
-        _AXNFTzExists[_GoldNFT] =true;
+        _AXNFTzExists[_url] =true;
+    }
+
+    function tokendata(uint256 _tokenId) public view returns (string memory, string memory, string memory, uint256, string memory, string memory, string memory){
+        string memory URL = AXNFTz[_tokenId];
+        string memory aXedrasId = aXedrasUniqueId[_tokenId];
+        string memory finessbar = finess[_tokenId];
+        uint256 weightbar = weight[_tokenId];
+        string memory provenancebar = provenance[_tokenId];
+        string memory materialbar = material[_tokenId];
+        string memory certificationbar = certification[_tokenId];
+        return (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar);
     }
 
     function burn(uint256 _tokenId) public {

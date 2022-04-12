@@ -214,6 +214,7 @@ contract ERC721 {
     }
 
     function _burn(uint256 tokenId) internal virtual {
+        require(ERC721.isApprovedOrOwner(msg.sender, tokenId), "ERC721: transfer caller is not owner nor approved");        
         address owner = ERC721.ownerOf(tokenId);
         // Clear approvals
         approve(address(0), tokenId);
