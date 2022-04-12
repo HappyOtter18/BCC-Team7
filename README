@@ -1,0 +1,28 @@
+# BCC-Team7
+
+This is a university project in the framework of the Blockchain challenge. 
+
+So far, it has been tried to implement a program to create NFTs. 
+
+The first folder shows the NFT contract 
+The NFT contract is broken down into 5 sub-contracts, in order to have a better visibility. 
+
+1. AXNFT
+This is the main contract, the one to be deployed to make all the contracts work 
+The mint function is programmed to add metadata in each token
+There is also a function to see the metadata depending on the token id
+A function to burn tokens is also implemented
+
+2. Connector 
+This is the contract that links all the sub-contracts together. This is for ease of use
+
+3. Metadata
+The basic information needed to deploy the NFT contract is stored here. 
+
+4. ERC721
+This contract implements the function to mine tokens but also all necessary standard functions of the ERC-721. 
+
+5. Enumerable
+This contract keeps track of all the NFTs, so we can know what all the supply is, who has which token, etc... 
+
+Then there is a second folder in which is the Basket Contract
