@@ -15,8 +15,8 @@ contract NFTBasket is AXNFT, ERC20 {
     address owner;
   }
 
-  event NFTStaked(address owner, uint256 tokenId, uint256 value);  //lisa fragen was genau event macht
-  event NFTUnstaked(address owner, uint256 tokenId, uint256 value);
+  event NFTStaked(address owner, uint256 tokenId, uint256 value);  
+  event NFTUnstaked(address owner, uint256 tokenId, uint256 value);  // brauchen wir erst ganz am schluss
   
 
   // reference to the Block NFT contract
@@ -78,7 +78,7 @@ contract NFTBasket is AXNFT, ERC20 {
   
   
   
-  //brauchen wir -> aber nur ein Teil davon
+  //brauchen wir erst am schluss da das zu schwierig sein könnte -> aber nur ein Teil davon
   
   function unstake(uint256[] calldata tokenIds) external {
       _claim(msg.sender, tokenIds, true);
