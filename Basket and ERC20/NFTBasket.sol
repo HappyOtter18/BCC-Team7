@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.9;
+pragma solidity 0.8.9;
 
 import "./ERC721.sol";
 import "./ERC20.sol";
@@ -9,13 +9,14 @@ import "./connector.sol";
 
 contract NFTBasket is ERC721, ERC20, AXNFT, connector {   
 // um auf die FUnktionen von AXNFT zugreifen zu können
-  
+  uint256 public NToken;
   uint256 public totalinBasket;
   
   struct vaultInfo {
-        AXNFT nft;
-        ERC20 token;
-        string name;
+    AXNFT axnft;
+    ERC20 token;
+    string name;
+    ERC721 nft;
   }
 
   vaultInfo[] public VaultInfo;
@@ -35,18 +36,19 @@ contract NFTBasket is ERC721, ERC20, AXNFT, connector {
   
 
   // reference to the Block NFT contract
-  AXNFT nft;
+  AXNFT axnft;
   ERC20 token;
-
+  ERC721 nft;
 
   // maps tokenId to  
   mapping(uint256 => Basket) public vault; 
 
+  /*
   constructor(ERC721 _nft, ERC20 _token) {    // hier haben wir noch kein Code für die Token 
     nft = _nft;
     token = _token;
   }
-
+  */
   function addVault(
         AXNFT _nft,
         ERC20 _token,
@@ -65,35 +67,38 @@ contract NFTBasket is ERC721, ERC20, AXNFT, connector {
 
 //um zu fragen welches der NFTs in den Basket soll -> wenn z.B. jemand viele NFTs hat 
 
- function stake(uint256[] calldata tokenIds) external {
-    uint256 tokenId;  //aufrufen der Token ID  -> initialisieren der variable
+ function stake(uint256 tokenId/*, vaultInfo(_name)*/) external {
+    //uint256 tokenId;  //aufrufen der Token ID  -> initialisieren der variable
     
-    totalStaked += tokenIds.length;  // zusammenzählen aller NFT die von dieser Person in den Basket sollen -> brauchen wir das? meistenes ist ja sowieso nur eines das zu einem bestimmten Basket passt
+    //totalStaked += tokenIds.length;  // zusammenzählen aller NFT die von dieser Person in den Basket sollen -> brauchen wir das? meistenes ist ja sowieso nur eines das zu einem bestimmten Basket passt
     vaultInfo storage vaultid = VaultInfo[_pid];
-    for (uint i = 0; i < tokenIds.length; i++) {    // kontrollieren jedes einzelnen NFTs 
-      tokenId = tokenIds[i];
+        // kontrollieren jedes einzelnen NFTs 
+    //tokenId = tokenIds[i];
       
       //if cause mit tokenID ob eigenschaften zu Basket passen -> oder besser require --> wenn es nicht passt: "NFT doesn't fit with selected basket."  -> video mit mehreren stakes
-      require(vaultid.nft.ownerOf(tokenId) == msg.sender, "not your NFT");   // für das brauchen wir mit OWner of die adresse des Owner -> beim NFT smart contract -> oder doch NFT.
-      require(vault[tokenId].tokenId == 0, "already in Basket");    // speichert den Besitzer des NFT, damit dieser das eigene NFT wieder zurück bekommen kann. -> brauchen wir eher nicht 
-      //require(materialbar == && finessbar ==  &&, "NFT doesn't fit with selected basket")
-      NToken = weight;
-      for(uint j = 0; j < NToken; j++) {
-        vaultid.token.mint();     // kann man minten mit einem anderen Smart Contract sodass es nur ausgelöst wird wenn das NFT wrklich in den Basket gelegt wird -> aussage von Katrin hat mich verwirrt
-      }
-      
+    require(vaultid.nft.ownerOf(tokenId) == msg.sender, "not your NFT");   // für das brauchen wir mit OWner of die adresse des Owner -> beim NFT smart contract -> oder doch NFT.
+    require(vault[tokenId].tokenId == 0, "already in Basket");    // speichert den Besitzer des NFT, damit dieser das eigene NFT wieder zurück bekommen kann. -> brauchen wir eher nicht 
+    require(tokendata(certification[_tokenID]) == "no data" && tokendata(provenance[_tokenID]) == "no data", "NFT doesn't fit with selected basket");
+    
+
       //macht den Transfer in den vaulet -> NFT wird in den BAsket gelegt
-      vaultid.nft.transferFrom(msg.sender, address(this), tokenId);  //macht noch nicht ganz sinn
-      emit NFTpacked(msg.sender, tokenId);
+    //vaultid.nft.transferFrom(msg.sender, address(this), tokenId);  //macht noch nicht ganz sinn
+    emit NFTpacked(msg.sender, tokenId);
+
+
+    uint256 weightbar = nft.tokendata(_tokenID);
+    NToken = weightbar;
+    for(uint j = 0; j < NToken; j++) {
+     // vaultid.token.mint();     // kann man minten mit einem anderen Smart Contract sodass es nur ausgelöst wird wenn das NFT wrklich in den Basket gelegt wird -> aussage von Katrin hat mich verwirrt
+    }
 
       // das ist unser basket
-      vault[tokenId] = Basket({
+    vault[tokenId] = Basket({
         //owner: msg.sender,
-        tokenId: uint24(tokenId)
+      tokenId: uint24(tokenId)
       
         //timestamp: uint48(block.timestamp)   //das brauchen wir eher nicht, da wir ja keine Zeitstoppen müssen 
-      });
-    }
+    });
     
   }
   
