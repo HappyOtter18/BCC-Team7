@@ -2,16 +2,19 @@
 
 pragma solidity 0.8.9;
 
-//import "https://github.com/net2devcrypto/n2dstaking/N2DRewards.sol";
-//import "https://github.com/net2devcrypto/n2dstaking/Collection.sol";
+
 import './ERC721.sol';
+import './AXNFT.sol';
+//import "https://github.com/HappyOtter18/BCC-Team7/blob/main/ERC%20721%20aXedras/ERC721.sol";
+//import "https://github.com/HappyOtter18/BCC-Team7/blob/main/ERC%20721%20aXedras/AXNFT.sol";
 
-contract NFTStaking is /*Ownable, IERC721Receiver, */ERC721 {
-
+contract NFTStaking is /*Ownable, IERC721Receiver, */ERC721/*, AXNFT */{  
+//ich kann AXNFT nicht hinzufügen -> keine Ahnung warum
   struct vaultInfo {
         ERC721 nft;
+        //AXNFT axnft;
         //N2DRewards token; 
-        string name;
+        string name;  //will ich eigentlich nicht ausklammern da eher wichtig, aber ansonsten gibt es eine Warnung
   }
 
   vaultInfo[] public VaultInfo;
@@ -23,7 +26,7 @@ contract NFTStaking is /*Ownable, IERC721Receiver, */ERC721 {
    // address owner;
   }
 
-
+  //AXNFT axnft;
   ERC721 nft;
   //N2DRewards token;
 
@@ -48,7 +51,7 @@ function addVault(
         );
     }
 
-  function stake(uint256 _pid, uint256 /*calldata*/ tokenId) external {
+  function pack(uint256 _pid, uint256 /*calldata*/ tokenId) external {
     //uint256 tokenId;
     //totalStaked += tokenIds.length;
     vaultInfo storage vaultid = VaultInfo[_pid];
@@ -56,6 +59,7 @@ function addVault(
      // tokenId = tokenIds[i];
     require(vaultid.nft.ownerOf(tokenId) == msg.sender, "not your token");
     require(vault[tokenId].tokenId == 0, 'already staked');
+    
 
     vaultid.nft.transferFrom(msg.sender, address(this), tokenId);
     emit NFTpacked(msg.sender, tokenId/*, block.timestamp*/);
