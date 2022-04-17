@@ -6,12 +6,10 @@ pragma solidity 0.8.9;
 //import './ERC721.sol';
 import './AXNFT.sol';
 
-contract NFTStaking is /*Ownable, IERC721Receiver, ERC721,*/ AXNFT {  
-//ich kann AXNFT nicht hinzufügen -> keine Ahnung warum
+contract NFTStaking is  AXNFT {  
+
   struct vaultInfo {
-        //ERC721 nft;
         AXNFT nft;
-        //N2DRewards token; 
         string name;  //will ich eigentlich nicht ausklammern da eher wichtig, aber ansonsten gibt es eine Warnung
   }
 
@@ -20,25 +18,29 @@ contract NFTStaking is /*Ownable, IERC721Receiver, ERC721,*/ AXNFT {
   // struct to store a stake's token, owner, and earning values
   struct Basket {
     uint24 tokenId;
-   // uint48 timestamp;
-   // address owner;
+   
   }
 
-  AXNFT nft;
-  //ERC721 nft;
-  //N2DRewards token;
-
+  AXNFT nft; /*
+  string[] public AXNFTz;
+  string[] public aXedrasUniqueId;
+  string[] public finess;
+  uint256[] public weight;
+  string[] public provenance;
+  string[] public material;
+  string[] public certification;
+   
+*/
   uint256 public totalStaked;
   mapping(uint256 => Basket) public vault; 
-  event NFTpacked(address owner, uint256 tokenId/*, uint256 value*/);
-  //event NFTUnstaked(address owner, uint256 tokenId, uint256 value);
-  //event Claimed(address owner, uint256 amount);
+  event NFTpacked(address owner, uint256 tokenId);
+  
 
 //diese Funktion brauchen wir vielleicht nicht, man kann sowieso nicht einfach eine vault hinzufügen.
 //wenn man eine einzelne Funktion von aussen ansprechen kann mit dem entsprechenden Namen reicht das eig. aus
 //das basket kontrolliert dann nur noch ob man das richtige ausgewählt hat
 //das würde das Ganze einfacher machen. 
-function addVault(
+/*function addVault(
         AXNFT _nft,
         //N2DRewards _token,
         string calldata _name
@@ -51,8 +53,8 @@ function addVault(
             })
         );
     }
-
-  function pack(uint256 _pid, uint256 /*calldata*/ tokenId) external {
+*/
+  function packing_Basket_1(uint256 _pid, uint256 /*calldata*/ tokenId) public {
       //unterschied zwischen external und public view 
     vaultInfo storage vaultid = VaultInfo[_pid];
     
@@ -60,8 +62,10 @@ function addVault(
       // kann man funktion package 1 , package 2 nennen sodass Fehlermeldung sinn macht?
     require(vaultid.nft.ownerOf(tokenId) == msg.sender, "not your token");
     require(vault[tokenId].tokenId == 0, 'already staked');
-    //string memory URL, string memory aXedrasId, string memory finessbar, uint256 weightbar, string memory provenancebar, string memory materialbar, string memory certificationbar = vaultid.nft.tokendata(tokenId);
-    //require(certificationbar == "" && provenancebar == "" && materialbar = "", "not );
+    //var (string memory URL, string memory aXedrasId, string memory finessbar, uint256 weightbar, string memory provenancebar, string memory materialbar, string memory certificationbar) = vaultid.nft.tokendata(tokenId);
+    //var (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = vaultid.nft.tokendata(tokenId);
+
+    //require(certificationbar == "" && provenancebar == "" && materialbar = "", "not  );
       // mit require muss jeder Smart Contract schon alle möglichen Basket beachtet haben.
     
     vaultid.nft.transferFrom(msg.sender, address(this), tokenId);
@@ -71,9 +75,7 @@ function addVault(
       //vaultid.token.mint();
     //}
     vault[tokenId] = Basket({
-    //  owner: msg.sender,
       tokenId: uint24(tokenId)
-     // timestamp: uint48(block.timestamp)
     });
     
   }
