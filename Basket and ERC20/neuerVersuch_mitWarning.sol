@@ -8,29 +8,23 @@ import './AXNFT.sol';
 
 contract NFTStaking is  AXNFT {  
 
+//braucht es wirklich beide structs?
   struct vaultInfo {
         AXNFT nft;
         string name;  //will ich eigentlich nicht ausklammern da eher wichtig, aber ansonsten gibt es eine Warnung
   }
 
   vaultInfo[] public VaultInfo;
-  
+   
   // struct to store a stake's token, owner, and earning values
   struct Basket {
     uint24 tokenId;
    
   }
 
-  AXNFT nft; /*
-  string[] public AXNFTz;
-  string[] public aXedrasUniqueId;
-  string[] public finess;
-  uint256[] public weight;
-  string[] public provenance;
-  string[] public material;
-  string[] public certification;
+  AXNFT nft; 
    
-*/
+
   uint256 public totalStaked;
   mapping(uint256 => Basket) public vault; 
   event NFTpacked(address owner, uint256 tokenId);
@@ -56,7 +50,7 @@ contract NFTStaking is  AXNFT {
 */
   function packing_Basket_1(uint256 _pid, uint256 /*calldata*/ tokenId) public {
       //unterschied zwischen external und public view 
-    vaultInfo storage vaultid = VaultInfo[_pid];
+    vaultInfo storage vaultid = VaultInfo[_pid]; //ist das wirklich nötig?
     
     //require(vaultInfo = /*bestimmte vaultID*/, "not correct vault") //keine gute Idee da man ja nicht sagen kann welche Function verwendet wird ->Lisa
       // kann man funktion package 1 , package 2 nennen sodass Fehlermeldung sinn macht?
@@ -71,7 +65,7 @@ contract NFTStaking is  AXNFT {
     vaultid.nft.transferFrom(msg.sender, address(this), tokenId);
     emit NFTpacked(msg.sender, tokenId);
     //NToken = weightbar;
-    //for(uint j = 0; j < NToken; j++) {
+      //uint j = 0; j < NToken; j++) {
       //vaultid.token.mint();
     //}
     vault[tokenId] = Basket({
