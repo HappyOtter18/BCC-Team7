@@ -8,15 +8,16 @@ import './connector.sol';
 contract NFTaXedras is connector {
 
     // Array that keep track of the minted NFT 
-    string[] public AXNFTz;
-    string[] public aXUniqueId;
-    string[] public finess;
-    uint256[] public weight;
-    string[] public provenance;
-    string[] public material;
-    string[] public certification;
+    string[] private AXNFTz;
+    string[] private aXUniqueId;
+    string[] private finess;
+    uint256[] private weight;
+    string[] private provenance;
+    string[] private material;
+    string[] private certification;
     //check if an ID already exist
     mapping(string => bool) _AXNFTzExists;
+
 
 // This function will make an array of the NFT already minted
 // Mint NFT to adresses and keep track of the adresses who mint the NFTs. 
@@ -43,8 +44,11 @@ contract NFTaXedras is connector {
         string memory provenancebar = provenance[_tokenId];
         string memory materialbar = material[_tokenId];
         string memory certificationbar = certification[_tokenId];
+        require(_exists(_tokenId), "token ID not existent anymore");
         return (URL, aXId, finessbar, weightbar, provenancebar, materialbar, certificationbar);
     }
+
+      
 
     function burn(uint256 _tokenId) public {
         _burn(_tokenId);
