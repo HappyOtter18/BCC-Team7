@@ -5,7 +5,7 @@ pragma solidity 0.8.9;
 
 import './connector.sol';
 
-contract NFTaXedras is connector {
+contract AXNFT is connector {
 
     // Array that keep track of the minted NFT 
     string[] private AXNFTz;
