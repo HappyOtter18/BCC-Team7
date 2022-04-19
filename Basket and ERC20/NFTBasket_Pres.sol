@@ -26,7 +26,7 @@ contract NFTBasket  is  AXNFT {
     require(nft.ownerOf(tokenId) == msg.sender, "not your NFT");
     require(vault_1[tokenId].tokenId == 0, "already in Basket");
     var (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = vaultid.nft.tokendata(tokenId);
-    require(certificationbar == "" && provenancebar == "" && materialbar = "", "Not the right basket.);
+    require(certificationbar == "Available" && provenancebar == "Available" && materialbar = "Recycled", "Not the right basket.);
     
     nft.transferFrom(msg.sender, address(this), tokenId);
     emit NFTpacked(msg.sender, tokenId);
