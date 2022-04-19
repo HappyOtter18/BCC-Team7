@@ -33,6 +33,7 @@ contract AXNFT is connector {
 //The other mint funtion, we don't have access directly, this is internal
     function mint(string memory _url, string memory _aXuniqueId, string memory _finess, uint256 _weightGramms, string memory _provenance, string memory _material, string memory _certification) public {
         require(!_AXNFTzExists[_url], "error, this NFT already exists"); //We can't mint two same NFTs
+        require(!_AXNFTzExists[_aXuniqueId], "error, this NFT already exists");
         require (tx.origin == aX, "you can't mint NFTs on this contract"); //Only the company, deployer of the contract can mint the token
         AXNFTz.push(_url);
         aXUniqueId.push(_aXuniqueId);
