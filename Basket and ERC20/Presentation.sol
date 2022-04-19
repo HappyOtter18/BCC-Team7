@@ -6,7 +6,7 @@ pragma solidity 0.8.9;
 //import './ERC20.sol';
 import './AXNFT.sol';
 
-contract NFTStaking is  AXNFT {  
+contract NFTBasket is  AXNFT {  
 
 //braucht es wirklich beide structs?
   struct vaultInfo {
