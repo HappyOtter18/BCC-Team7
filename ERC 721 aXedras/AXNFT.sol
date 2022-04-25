@@ -61,9 +61,11 @@ contract AXNFT is connector {
 
       
 
-    function burn(uint256 _tokenId) public {
+    function burn(address _from, uint256 _tokenId) public {
         _burn(_tokenId);
-        _burn2();
+        ERC721Enumerable._removeTokenFromOwnerEnumeration(_from, _tokenId);
+        ERC721Enumerable._removeTokenFromAllTokensEnumeration(_tokenId);
+
     }
 
 }
