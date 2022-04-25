@@ -7,7 +7,7 @@ import './connector.sol';
 
 contract AXNFT is connector {
 
-    // Array that keep track of the minted NFT 
+ // Array that keep track of the minted NFT 
     string[] private AXNFTz;
     string[] private aXUniqueId;
     string[] private finess;
@@ -17,7 +17,6 @@ contract AXNFT is connector {
     string[] private certification;
     //check if an ID already exist
     mapping(string => bool) _AXNFTzExists;
-
 
     address aX;
 
@@ -34,7 +33,7 @@ contract AXNFT is connector {
     function mint(string memory _url, string memory _aXuniqueId, string memory _finess, uint256 _weightGramms, string memory _provenance, string memory _material, string memory _certification) public {
         require(!_AXNFTzExists[_url], "error, this NFT already exists"); //We can't mint two same NFTs
         require(!_AXNFTzExists[_aXuniqueId], "error, this NFT already exists");
-        require (tx.origin == aX, "you can't mint NFTs on this contract"); //Only the company, deployer of the contract can mint the token
+        require (msg.sender == aX, "you can't mint NFTs on this contract"); //Only the company, deployer of the contract can mint the toek
         AXNFTz.push(_url);
         aXUniqueId.push(_aXuniqueId);
         finess.push(_finess);
@@ -43,13 +42,10 @@ contract AXNFT is connector {
         material.push(_material);
         certification.push(_certification);
         uint _id = AXNFTz.length -1;
-        _origin[_id] = _provenance;
-        _mat[_id] = _material;
-        _certif[_id]= _certification;
         _mint(msg.sender, _id); //we get an id for each token. The msg.sender is our adress (the one that interact). 
         _AXNFTzExists[_url] =true;
+        _AXNFTzExists[_aXuniqueId] =true;
     }
-
 
     function tokendata(uint256 _tokenId) public view returns (string memory, string memory, string memory, uint256, string memory, string memory, string memory){
         string memory URL = AXNFTz[_tokenId];
@@ -70,10 +66,5 @@ contract AXNFT is connector {
         _burn2();
     }
 
-//initialize this contract to inherit name and symbol form erc721metadata so that the name is goldnft and the symbol is AXNFT
-    constructor () connector("GoldNFT", "AXNFT") {
-
-    }
-
-
 }
+
