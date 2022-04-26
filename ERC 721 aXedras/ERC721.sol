@@ -56,13 +56,14 @@ contract ERC721 {
         keep track of how many tokens an owner address has
         Events that emits a transfer log - contract address, where it is being minted to, the id
     */
-//Everybody can come and mint their own NFT
+
 //We call the function in the AXNFT contract
 /// We mark it as virtual, we override it in the enumerable contract 
     function _mint(address to, uint256 tokenId) internal virtual {
         //require that the adress is not 0 and the token doesn't already exist
         require(to != address(0), "ERC721: no minting address");
         require(!_exists(tokenId), "Token already minted"); //make sure that the minted Id doesn't exist. 
+        _beforeTokenTransfer(address(0), to, tokenId);
         //add the new adress with a token id for minting
         _tokenOwner[tokenId] =to;
         //How many token own each address? 
@@ -101,6 +102,7 @@ contract ERC721 {
         _OwnedTokensCount[_from] -= 1; 
         _OwnedTokensCount[_to] += 1;
         _tokenOwner[_tokenId] = _to;
+        _beforeTokenTransfer(address(0), to, tokenId);
         emit Transfer(_from, _to, _tokenId);
     }
 
@@ -213,14 +215,25 @@ contract ERC721 {
         safeTransferFrom(_from, _to, _tokenId, "");
     }
 
+// to destroy a token 
     function _burn(uint256 tokenId) internal virtual {
         require(ERC721.isApprovedOrOwner(msg.sender, tokenId), "ERC721: transfer caller is not owner nor approved");        
         address owner = ERC721.ownerOf(tokenId);
         // Clear approvals
+        _beforeTokenTransfer(owner, address(0), tokenId);
         approve(address(0), tokenId);
         _OwnedTokensCount[owner] -= 1;
+        
         delete _tokenOwner[tokenId];
         emit Transfer(owner, address(0), tokenId);
     }
-
+// * @dev Hook that is called before any token transfer. This includes minting
+     //- When `from` and `to` are both non-zero, ``from``'s `tokenId` will be
+     // transferred to `to`.
+     // - When `from` is zero, `tokenId` will be minted for `to`.
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal virtual {}
 }
