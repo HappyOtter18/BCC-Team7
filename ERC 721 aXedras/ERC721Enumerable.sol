@@ -76,8 +76,8 @@ contract ERC721Enumerable is ERC721  {                  //IERC721Enumerable not 
         address from,
         address to,
         uint256 tokenId
-    ) internal virtual  {
-        // super._beforeTokenTransfer(from, to, tokenId); We didn't implemented the contract where this is stored (I think the interface)
+    ) internal virtual override(ERC721) {
+        super._beforeTokenTransfer(from, to, tokenId); 
 
         if (from == address(0)) {
             _addTokenToAllTokensEnumeration(tokenId);
