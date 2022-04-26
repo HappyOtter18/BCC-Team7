@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.9;
+pragma solidity 0.8.9;
 
 // SOURCE OF THIS CONTRACT: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/ERC721Enumerable.sol
+// Except for the mint function
 
 import "./ERC721.sol";
 // import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
@@ -11,7 +12,7 @@ import "./ERC721.sol";
  * enumerability of all the token ids in the contract as well as all token ids owned by each
  * account.
  */
-contract ERC721Enumerable is ERC721  { //IERC721Enumerable
+contract ERC721Enumerable is ERC721  {                  //IERC721Enumerable not imported 
     // Mapping from owner to list of owned token IDs
     mapping(address => mapping(uint256 => uint256)) private _ownedTokens;
 
@@ -55,6 +56,7 @@ contract ERC721Enumerable is ERC721  { //IERC721Enumerable
         return _allTokens[index];
     }
 
+
     /**
      * @dev Hook that is called before any token transfer. This includes minting
      * and burning.
@@ -75,7 +77,7 @@ contract ERC721Enumerable is ERC721  { //IERC721Enumerable
         address to,
         uint256 tokenId
     ) internal virtual  {
-        // super._beforeTokenTransfer(from, to, tokenId);
+        // super._beforeTokenTransfer(from, to, tokenId); We didn't implemented the contract where this is stored (I think the interface)
 
         if (from == address(0)) {
             _addTokenToAllTokensEnumeration(tokenId);
@@ -94,19 +96,33 @@ contract ERC721Enumerable is ERC721  { //IERC721Enumerable
      * @param to address representing the new owner of the given token ID
      * @param tokenId uint256 ID of the token to be added to the tokens list of the given address
      */
-    function _addTokenToOwnerEnumeration(address to, uint256 tokenId) private {
+    function _addTokenToOwnerEnumeration(address to, uint256 tokenId) internal {
         uint256 length = ERC721.balanceOf(to);
         _ownedTokens[to][length] = tokenId;
         _ownedTokensIndex[tokenId] = length;
+        // _ownedTokens[to].push(tokenId);
+        // _ownedTokensIndex[tokenId] = _ownedTokens[to].length; // that is from us, this line function wasn't in openzepplin
     }
 
     /**
      * @dev Private function to add a token to this extension's token tracking data structures.
      * @param tokenId uint256 ID of the token to be added to the tokens list
      */
-    function _addTokenToAllTokensEnumeration(uint256 tokenId) private {
+    function _addTokenToAllTokensEnumeration(uint256 tokenId) internal {
         _allTokensIndex[tokenId] = _allTokens.length;
         _allTokens.push(tokenId);
+    }
+
+    // The _mint function wasn't in openzepplin
+    //This function must override the mint function in ErC721
+    function _mint(address to, uint tokenId) internal override(ERC721) {
+        //super allow to grab the mint function from ERC721
+        super._mint(to, tokenId);
+        //To further build a market place, it is important to keep the market place. To have a real functioning market place.
+        //we need to build many things to store the informations in teh mapping 
+        //add tokens to the owner (so we know as the owner how many tokens we have, keep track of the mapping)
+        _addTokenToAllTokensEnumeration(tokenId);
+        _addTokenToOwnerEnumeration(to, tokenId);
     }
 
     /**
