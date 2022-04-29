@@ -82,15 +82,17 @@ contract NFTBasket is minting {
     string memory materialbar;
     string memory certificationbar;
     string memory URL;
-    for (uint i = 0; i < totalinBasket; i++) {
-      if (uint24(basket_1[i].tokenId) == uint24) {
-        uint24 tokenId = uint24(basket_1[i].tokenId);
-        (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
-        if (weightbar <= amount) {
-          token.transfer(from,  this,  weightbar);
-          amount = amount - weightbar;
-          //AXNFT._transfer(this,  from, tokenId);
-          delete basket_1[tokenId];
+    while(0 < amount){
+      for (uint i = 0; i < totalinBasket; i++) {
+        if (uint24(basket_1[i].tokenId) == uint24) {
+          uint24 tokenId = uint24(basket_1[i].tokenId);
+          (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
+          if (weightbar <= amount) {
+            token.transferto(address(this),  weightbar, from);
+            amount = amount - weightbar;
+            //AXNFT._transfer(address(this),  from, tokenId);
+            delete basket_1[tokenId];
+          }
         }
       }
     }
