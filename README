@@ -2,9 +2,14 @@
 
 This is a university project in the framework of the Blockchain challenge. 
 
-So far, it has been tried to implement a program to create NFTs. 
+So far, it has been tried to implement a program to create NFTs and then to put similar ones into baskets . 
 
 The first folder shows the NFT contract 
+
+The final contract is called "SMART_CONTRACT_AXNFT". This contract use the OpenZeppelin Standard. It avoids error and respect the standard as it should be. 
+
+However, before only taking the standard and implement it as such, it was tried to understand it. The NFT smart contract was then deployed from scratch. 
+
 The NFT contract is broken down into 5 sub-contracts, in order to have a better visibility. 
 
 1. AXNFT
@@ -24,5 +29,7 @@ This contract implements the function to mint tokens but also all necessary stan
 
 5. Enumerable
 This contract keeps track of all the NFTs, so we can know what all the supply is, who has which token, etc... 
+The is a old and a new version of the enumerable contract. The old version was programmed from scratch, this incurred errors and was not very stable. 
+The version "new" use simply the OpenZeppelin standard and the whole was adapted to our code.
 
 Then there is a second folder in which is the Basket Contract
