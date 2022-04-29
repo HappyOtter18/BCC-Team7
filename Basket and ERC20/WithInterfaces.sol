@@ -1,36 +1,37 @@
-pragma solidity >=0.5.0 <0.6.0;
-/*// SPDX-License-Identifier: MIT LICENSE
+// SPDX-License-Identifier: MIT LICENSE
 
 pragma solidity 0.8.9;
-*/
+
+
+//pragma solidity >=0.5.0 <0.6.0;
 
 //import './ERC20.sol';
 //import './connector.sol';
 
-contract DataInterface {
-    function tokendata(uint256 _tokenId) public view returns (
-      string memory, 
-      string memory, 
-      string memory, 
-      uint256, 
-      string memory, 
-      string memory, 
-      string memory
-    );
+interface DataInterface {
+  function tokendata(uint256 _tokenId) external view returns (
+    string memory, 
+    string memory, 
+    string memory, 
+    uint256, 
+    string memory, 
+    string memory, 
+    string memory
+  );
 }
 
 
-contract NFTStaking is  connector/*, ERC20 */{  
+contract NFTStaking /*, ERC20 */{  
   address DataInterfaceAddress = 0xd9145CCE52D386f254917e481eB44e9943F39138;
   DataInterface NFTContract = DataInterface(DataInterfaceAddress);
 
-  connector nft;
+  //connector nft;
 
-  constructor(connector _nft /*, ERC20 _token*/) { 
+  /*constructor(connector _nft , ERC20 _token) { 
     nft = _nft;
     //token = _token;
   }
-
+*/
 
  
   struct Basket_1 {
@@ -57,7 +58,7 @@ contract NFTStaking is  connector/*, ERC20 */{
     string memory certificationbar;
     (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
     
-    //require(certificationbar == "Available" && provenancebar == "Available" && materialbar = "Recycled", "Not the right basket.);
+    //require(certificationbar == "Available" && provenancebar == "Available" && materialbar = "Recycled", "Not the right basket.");
     
     //nft.transferFrom(msg.sender, address(this), tokenId);
     emit NFTpacked(msg.sender, tokenId);
