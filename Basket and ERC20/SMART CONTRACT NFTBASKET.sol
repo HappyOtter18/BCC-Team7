@@ -32,10 +32,12 @@ contract NFTBasket is minting {
   }
 
   struct Basket_1 {
-    uint24 tokenId;
+    uint256 tokenId;
+    uint256 totalinBasket;
+    uint256 totalmintToken;
   }
 
-   
+  uint256 public totalmintToken = 0;
   uint256 public totalinBasket = 0;
   mapping(uint256 => Basket_1) public basket_1; 
   event NFTpacked(address owner, uint256 tokenId);
@@ -63,11 +65,34 @@ contract NFTBasket is minting {
     emit NFTpacked(msg.sender, tokenId);
     uint256 NToken = weightbar;
     token.mint(_to, NToken);
+    totalmintToken = totalmintToken +1;
 
     basket_1[tokenId] = Basket_1({
-      tokenId: uint24(tokenId)
+      tokenId: uint24(tokenId),
+      totalinBasket: uint256(totalinBasket),
+      totalmintToken: uint256(totalmintToken)
     });
     
   }
-
+  function unpack_NFT(address from, uint256 amount) public {
+    string memory aXedrasId;
+    string memory finessbar;
+    uint256 weightbar;
+    string memory provenancebar;
+    string memory materialbar;
+    string memory certificationbar;
+    string memory URL;
+    for (uint i = 0; i < totalinBasket; i++) {
+      if (uint24(basket_1[i].tokenId) == uint24) {
+        uint24 tokenId = uint24(basket_1[i].tokenId);
+        (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
+        if (weightbar <= amount) {
+          token.transfer(from,  this,  weightbar);
+          amount = amount - weightbar;
+          //AXNFT._transfer(this,  from, tokenId);
+          delete basket_1[tokenId];
+        }
+      }
+    }
+  }
 }
