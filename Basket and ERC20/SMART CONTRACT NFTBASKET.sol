@@ -74,6 +74,8 @@ contract NFTBasket is minting {
     });
     
   }
+
+  
   function unpack_NFT(address from, uint256 amount) public {
     string memory aXedrasId;
     string memory finessbar;
@@ -84,17 +86,54 @@ contract NFTBasket is minting {
     string memory URL;
     while(0 < amount){
       for (uint i = 0; i < totalinBasket; i++) {
-        if (uint24(basket_1[i].tokenId) == uint24) {
-          uint24 tokenId = uint24(basket_1[i].tokenId);
-          (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
-          if (weightbar <= amount) {
-            token.transferto(address(this),  weightbar, from);
-            amount = amount - weightbar;
-            //AXNFT._transfer(address(this),  from, tokenId);
-            delete basket_1[tokenId];
-          }
+        uint24 tokenId = uint24(basket_1[i].tokenId);
+        (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
+        if (weightbar <= amount) {
+          token.transferto(address(this),  weightbar, msg.sender);
+          token.burnToken(address(this), weightbar);
+          amount = amount - weightbar;
+          //AXNFT.transferFrom(address(this),  from, tokenId);
+          delete basket_1[tokenId];
         }
       }
     }
   }
+
+
+  //https://ethereum.stackexchange.com/questions/7317/how-can-i-return-struct-when-function-is-called
+  function showNFT() public view returns(string memory, string memory, string memory, uint256, string memory, string memory, string memory) {
+    string memory output="";
+    string memory aXedrasId;
+    string memory finessbar;
+    uint256 weightbar;
+    string memory provenancebar;
+    string memory materialbar;
+    string memory certificationbar;
+    string memory URL;
+    for (uint i = 0; i < totalinBasket; i++) {
+        output = string(abi.encodePacked(output,"[", basket_1[i].tokenId, ",", basket_1[i].totalinBasket, ",", basket_1[i].totalmintToken, ",""]"));
+        uint tokenId = basket_1[i].tokenId;
+        (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
+    }
+  return (output, URL, finessbar, weightbar, provenancebar, materialbar, certificationbar);
+  }
+
+  function get_specificNFT(uint tokenId, uint amount, address from) public {
+    string memory aXedrasId;
+    string memory finessbar;
+    uint256 weightbar;
+    string memory provenancebar;
+    string memory materialbar;
+    string memory certificationbar;
+    string memory URL;
+    (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
+    uint weight = weightbar;
+    require(weight==amount, "not enough token");
+    token.transferto(address(this),  amount, msg.sender); //kontrollieren ob diese Transfer funktioniert -> ansonsten abbruch
+    token.burnToken(address(this), amount);
+    //AXNFT.transferFrom(address(this),  from, tokenId);
+    delete basket_1[tokenId];
+  }
+
 }
+
