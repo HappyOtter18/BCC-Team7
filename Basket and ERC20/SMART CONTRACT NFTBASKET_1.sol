@@ -4,7 +4,7 @@ pragma solidity 0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-import './minting.sol';
+import './minting_1.sol';
 
 interface DataInterface {
   function tokendata(uint256 _tokenId) external view returns (
@@ -22,19 +22,18 @@ interface DataInterface {
         address to,
         uint256 tokenId
     ) external virtual;
-    
+
   function ownerOf(uint256 tokenId) external virtual view returns (address);
 }
 
 
-contract NFTBasket is minting {  
+contract NFTBasket is minting_1 {  
   
   DataInterface NFTContract;
-  minting token;
+  minting_1 token;
 
   constructor (address AXNFT) { 
     NFTContract = DataInterface(AXNFT);
-    
     //token = _token;
   }
 
@@ -143,4 +142,3 @@ contract NFTBasket is minting {
   }
 
 }
-
