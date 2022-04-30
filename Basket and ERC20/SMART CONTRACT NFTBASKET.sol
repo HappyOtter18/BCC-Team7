@@ -5,7 +5,6 @@ pragma solidity 0.8.9;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 import './minting.sol';
-//import './AXNFT.sol';
 
 interface DataInterface {
   function tokendata(uint256 _tokenId) external view returns (
@@ -17,6 +16,14 @@ interface DataInterface {
     string memory, 
     string memory
   ); 
+
+  function transferFrom(
+        address from,
+        address to,
+        uint256 tokenId
+    ) external virtual;
+    
+  function ownerOf(uint256 tokenId) external virtual view returns (address);
 }
 
 
@@ -45,7 +52,7 @@ contract NFTBasket is minting {
 
   function packing_Basket_1(uint256 tokenId, address _to) public {
     
-    //require(nft.ownerOf(tokenId) == msg.sender, "not your token"); //nicht der sender -> da das axedras ist -> oder gehört das NFT nun kurzfrisit aXedras
+    require(NFTContract.ownerOf(tokenId) == msg.sender, "not your token"); //nicht der sender -> da das axedras ist -> oder gehört das NFT nun kurzfrisit aXedras
     require(basket_1[tokenId].tokenId == 0, 'already staked');
     string memory URL;
     string memory aXedrasId;
@@ -60,7 +67,7 @@ contract NFTBasket is minting {
     require(keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((certificationbar))), "Not the right basket.");
     require(keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((provenancebar))), "Not the right basket.");
     require(keccak256(abi.encodePacked((r))) == keccak256(abi.encodePacked((materialbar))) , "Not the right basket."); 
-    //NFTContract.transferFrom(msg.sender, address(this), tokenId);
+    NFTContract.transferFrom(msg.sender, address(this), tokenId);
     totalinBasket = totalinBasket + 1;
     emit NFTpacked(msg.sender, tokenId);
     uint256 NToken = weightbar;
@@ -92,7 +99,7 @@ contract NFTBasket is minting {
           token.transferto(address(this),  weightbar, msg.sender);
           token.burnToken(address(this), weightbar);
           amount = amount - weightbar;
-          //AXNFT.transferFrom(address(this),  from, tokenId);
+          NFTContract.transferFrom(address(this),  from, tokenId);
           delete basket_1[tokenId];
         }
       }
@@ -131,7 +138,7 @@ contract NFTBasket is minting {
     require(weight==amount, "not enough token");
     token.transferto(address(this),  amount, msg.sender); //kontrollieren ob diese Transfer funktioniert -> ansonsten abbruch
     token.burnToken(address(this), amount);
-    //AXNFT.transferFrom(address(this),  from, tokenId);
+    NFTContract.transferFrom(address(this),  from, tokenId);
     delete basket_1[tokenId];
   }
 
