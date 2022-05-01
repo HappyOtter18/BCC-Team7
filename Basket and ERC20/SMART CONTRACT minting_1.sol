@@ -13,17 +13,21 @@ contract minting_1 is ERC20, ERC20Burnable {
         _mint(to, amount);
     }
 
-    function transferto(address to, uint256 amount, address from) external {
-        address _msgSender=from;
-        transfer(to, amount);
+    function transferto(address sender, address recipient, uint256 amount) external {
+        transferFrom(sender, recipient, amount);
     }
 
     function burnToken(address account, uint256 amount) external {
         burnFrom(account, amount);
-      
-      
-  }
+    }
+    //approval functionen beim senden des NFT, und beim senden der Token um ein NFt zu erhalten.
+
+    function approvemint(address spender, uint256 amount) external {
+        approve(spender, amount);
+    }
+
+    //for NFTs
+    function approveNFT(address to, uint256 tokenId) external {
+        approve(to, tokenId);
+    }
 }
-
-
-
