@@ -49,9 +49,8 @@ contract NFTBasket is minting_1 {
   event NFTpacked(address owner, uint256 tokenId);
   
 
-  function packing_Basket_1(uint256 tokenId, address _to) public {
-    
-    require(NFTContract.ownerOf(tokenId) == msg.sender, "not your token"); //nicht der sender -> da das axedras ist -> oder gehört das NFT nun kurzfrisit aXedras
+  function packing_Basket_1(uint256 tokenId, address _from) public {
+    require(NFTContract.ownerOf(tokenId) == _from, "not your token"); //nicht der sender -> da das axedras ist -> oder gehört das NFT nun kurzfrisit aXedras
     require(basket_1[tokenId].tokenId == 0, 'already staked');
     string memory URL;
     string memory aXedrasId;
@@ -66,19 +65,19 @@ contract NFTBasket is minting_1 {
     require(keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((certificationbar))), "Not the right basket.");
     require(keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((provenancebar))), "Not the right basket.");
     require(keccak256(abi.encodePacked((r))) == keccak256(abi.encodePacked((materialbar))) , "Not the right basket."); 
-    NFTContract.transferFrom(msg.sender, address(this), tokenId);
+    token.approveNFT(msg.sender, tokenId); // nicht klar ob korrekt
+    NFTContract.transferFrom(_from, address(this), tokenId);
     totalinBasket = totalinBasket + 1;
-    emit NFTpacked(msg.sender, tokenId);
+    emit NFTpacked(_from, tokenId);
     uint256 NToken = weightbar;
-    token.mint(_to, NToken);
-    totalmintToken = totalmintToken +1;
+    token.mint(_from, NToken);
+    totalmintToken = totalmintToken + NToken;
 
     basket_1[tokenId] = Basket_1({
       tokenId: uint24(tokenId),
       totalinBasket: uint256(totalinBasket),
       totalmintToken: uint256(totalmintToken)
     });
-    
   }
 
   
@@ -95,7 +94,8 @@ contract NFTBasket is minting_1 {
         uint24 tokenId = uint24(basket_1[i].tokenId);
         (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
         if (weightbar <= amount) {
-          token.transferto(address(this),  weightbar, msg.sender);
+          token.approvemint(from, weightbar); //ist ein boolean
+          token.transferto(from, address(this), weightbar);
           token.burnToken(address(this), weightbar);
           amount = amount - weightbar;
           NFTContract.transferFrom(address(this),  from, tokenId);
@@ -134,8 +134,9 @@ contract NFTBasket is minting_1 {
     string memory URL;
     (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
     uint weight = weightbar;
-    require(weight==amount, "not enough token");
-    token.transferto(address(this),  amount, msg.sender); //kontrollieren ob diese Transfer funktioniert -> ansonsten abbruch
+    require(weight<=amount, "not enough token");
+    token.approvemint(from, weightbar); //ist ein boolean
+    token.transferto(from, address(this), weightbar);
     token.burnToken(address(this), amount);
     NFTContract.transferFrom(address(this),  from, tokenId);
     delete basket_1[tokenId];
