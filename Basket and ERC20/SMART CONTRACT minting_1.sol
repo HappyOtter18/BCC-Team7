@@ -4,6 +4,7 @@ pragma solidity 0.8.9;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+//import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 
 contract minting_1 is ERC20, ERC20Burnable {
 
@@ -26,8 +27,7 @@ contract minting_1 is ERC20, ERC20Burnable {
         approve(spender, amount);
     }
 
-    //for NFTs
-    function approveNFT(address to, uint256 tokenId) external {
-        approve(to, tokenId);
-    }
 }
+
+
+
