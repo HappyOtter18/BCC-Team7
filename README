@@ -4,7 +4,7 @@ This is a university project in the framework of the Blockchain challenge.
 
 So far, it has been tried to implement a program to create NFTs and then to put similar ones into baskets . 
 
-The first folder shows the NFT contract 
+The first folder to look at, NFT721, shows the NFT contract 
 
 The final contract is called "SMART_CONTRACT_AXNFT". This contract use the OpenZeppelin Standard. It avoids error and respect the standard as it should be. 
 
