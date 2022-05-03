@@ -50,9 +50,16 @@ contract NFTBasket is minting_1 {
   mapping(uint256 => Basket_1) public basket_1; 
   event NFTpacked(address owner, uint256 tokenId);
   
+  function approvalNFT(address to, uint256 tokenId) public {
+    NFTContract.approve(to, tokenId); // nicht klar ob korrekt
+  }
+
+  function approveToken(address from, uint256 amount) public {
+    token.approvemint(from, amount);
+  }
 
   function packing_Basket_1(uint256 tokenId, address _from) public {
-    require(NFTContract.ownerOf(tokenId) == _from, "not your token"); //nicht der sender -> da das axedras ist -> oder gehört das NFT nun kurzfrisit aXedras
+    require(NFTContract.ownerOf(tokenId) == _from, "not your token"); 
     require(basket_1[tokenId].tokenId == 0, 'already staked');
     string memory URL;
     string memory aXedrasId;
@@ -67,7 +74,7 @@ contract NFTBasket is minting_1 {
     require(keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((certificationbar))), "Not the right basket.");
     require(keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((provenancebar))), "Not the right basket.");
     require(keccak256(abi.encodePacked((r))) == keccak256(abi.encodePacked((materialbar))) , "Not the right basket."); 
-    NFTContract.approve(msg.sender, tokenId); // nicht klar ob korrekt
+    
     NFTContract.transferFrom(_from, address(this), tokenId);
     totalinBasket = totalinBasket + 1;
     emit NFTpacked(_from, tokenId);
@@ -96,7 +103,7 @@ contract NFTBasket is minting_1 {
         uint24 tokenId = uint24(basket_1[i].tokenId);
         (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
         if (weightbar <= amount) {
-          token.approvemint(from, weightbar); //ist ein boolean
+          //token.approvemint(from, weightbar); 
           token.transferto(from, address(this), weightbar);
           token.burnToken(address(this), weightbar);
           amount = amount - weightbar;
@@ -137,7 +144,7 @@ contract NFTBasket is minting_1 {
     (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
     uint weight = weightbar;
     require(weight<=amount, "not enough token");
-    token.approvemint(from, weightbar); //ist ein boolean
+    //token.approvemint(from, weightbar); //ist ein boolean
     token.transferto(from, address(this), weightbar);
     token.burnToken(address(this), amount);
     NFTContract.transferFrom(address(this),  from, tokenId);
