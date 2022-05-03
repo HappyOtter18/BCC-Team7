@@ -21,11 +21,11 @@ interface DataInterface {
         address from,
         address to,
         uint256 tokenId
-    ) external virtual;
+    ) external;
 
-  function ownerOf(uint256 tokenId) external virtual view returns (address);
+  function ownerOf(uint256 tokenId) external view returns (address);
 
-  function approve(address to, uint256 tokenId) external virtual;
+  function approve(address to, uint256 tokenId) external;
 }
 
 
@@ -67,14 +67,13 @@ contract NFTBasket is minting_1 {
     require(keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((certificationbar))), "Not the right basket.");
     require(keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((provenancebar))), "Not the right basket.");
     require(keccak256(abi.encodePacked((r))) == keccak256(abi.encodePacked((materialbar))) , "Not the right basket."); 
-    NFTContract.approve(msg.sender, tokenId); // nicht klar ob korrekt
     NFTContract.transferFrom(msg.sender, address(this), tokenId);
     totalinBasket = totalinBasket + 1;
     emit NFTpacked(msg.sender, tokenId);
     uint256 NToken = weightbar;
     token.mint(msg.sender, NToken);
     totalmintToken = totalmintToken + NToken;
-
+ 
     basket_1[tokenId] = Basket_1({
       tokenId: uint24(tokenId),
       totalinBasket: uint256(totalinBasket),
