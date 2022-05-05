@@ -32,7 +32,7 @@ interface DataInterface {
 contract NFTBasket is minting_1 {  
   
   DataInterface NFTContract;
-  minting_1 token;
+  //minting_1 token;
 
   constructor (address AXNFT) { 
     NFTContract = DataInterface(AXNFT);
@@ -71,7 +71,7 @@ contract NFTBasket is minting_1 {
     totalinBasket = totalinBasket + 1;
     emit NFTpacked(msg.sender, tokenId);
     uint256 NToken = weightbar;
-    token.mint(msg.sender, NToken);
+    mint(msg.sender, NToken);
     totalmintToken = totalmintToken + NToken;
  
     basket_1[tokenId] = Basket_1({
@@ -95,11 +95,10 @@ contract NFTBasket is minting_1 {
         uint24 tokenId = uint24(basket_1[i].tokenId);
         (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
         if (weightbar <= amount) {
-          //token.approvemint(from, weightbar); //ist ein boolean
-          token.transferto(msg.sender, address(this), weightbar);
-          token.burnToken(address(this), weightbar);
+          transferto(msg.sender, address(this), weightbar);
+          burnToken(address(this), weightbar);
           amount = amount - weightbar;
-          NFTContract.transferFrom(address(this), msg.sender, tokenId);
+          NFTContract.transferFrom(address(this), msg.sender, tokenId); //funktioniert transferfrom oder sonst transfer
           delete basket_1[tokenId];
         }
       }
@@ -136,12 +135,10 @@ contract NFTBasket is minting_1 {
     (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
     uint weight = weightbar;
     require(weight<=amount, "not enough token");
-    //token.approvemint(msg.sender, weightbar); //ist ein boolean
-    token.transferto(msg.sender, address(this), weightbar);
-    token.burnToken(address(this), amount);
+    transferto(msg.sender, address(this), weightbar);
+    burnToken(address(this), amount);
     NFTContract.transferFrom(address(this),  msg.sender, tokenId);
     delete basket_1[tokenId];
   }
 
 }
-
