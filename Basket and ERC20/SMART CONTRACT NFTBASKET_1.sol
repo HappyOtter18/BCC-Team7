@@ -21,22 +21,22 @@ interface DataInterface {
         address from,
         address to,
         uint256 tokenId
-    ) external virtual;
+    ) external;
 
-  function ownerOf(uint256 tokenId) external virtual view returns (address);
+  function ownerOf(uint256 tokenId) external view returns (address);
 
-  function approve(address to, uint256 tokenId) external virtual;
+  function approve(address to, uint256 tokenId) external;
 }
 
 
 contract NFTBasket is minting_1 {  
   
   DataInterface NFTContract;
-  minting_1 token;
+  
 
   constructor (address AXNFT) { 
     NFTContract = DataInterface(AXNFT);
-    //token = _token;
+    
   }
 
   struct Basket_1 {
@@ -50,14 +50,6 @@ contract NFTBasket is minting_1 {
   mapping(uint256 => Basket_1) public basket_1; 
   event NFTpacked(address owner, uint256 tokenId);
   
-  function approvalNFT(address to, uint256 tokenId) public {
-    NFTContract.approve(to, tokenId); // nicht klar ob korrekt
-  }
-
-  function approveToken(address from, uint256 amount) public {
-    token.approvemint(from, amount);
-  }
-
   function packing_Basket_1(uint256 tokenId, address _from) public {
     require(NFTContract.ownerOf(tokenId) == _from, "not your token"); 
     require(basket_1[tokenId].tokenId == 0, 'already staked');
@@ -79,7 +71,7 @@ contract NFTBasket is minting_1 {
     totalinBasket = totalinBasket + 1;
     emit NFTpacked(_from, tokenId);
     uint256 NToken = weightbar;
-    token.mint(_from, NToken);
+    mint(_from, NToken);
     totalmintToken = totalmintToken + NToken;
 
     basket_1[tokenId] = Basket_1({
@@ -103,9 +95,8 @@ contract NFTBasket is minting_1 {
         uint24 tokenId = uint24(basket_1[i].tokenId);
         (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
         if (weightbar <= amount) {
-          //token.approvemint(from, weightbar); 
-          token.transferto(from, address(this), weightbar);
-          token.burnToken(address(this), weightbar);
+          transferto(from, address(this), weightbar);
+          burnToken(address(this), weightbar);
           amount = amount - weightbar;
           NFTContract.transferFrom(address(this),  from, tokenId);
           delete basket_1[tokenId];
@@ -144,9 +135,8 @@ contract NFTBasket is minting_1 {
     (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
     uint weight = weightbar;
     require(weight<=amount, "not enough token");
-    //token.approvemint(from, weightbar); //ist ein boolean
-    token.transferto(from, address(this), weightbar);
-    token.burnToken(address(this), amount);
+    transferto(from, address(this), weightbar);
+    burnToken(address(this), amount);
     NFTContract.transferFrom(address(this),  from, tokenId);
     delete basket_1[tokenId];
   }
