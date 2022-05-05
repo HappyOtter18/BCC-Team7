@@ -43,6 +43,7 @@ contract NFTBasket is minting_1 {
     uint256 tokenId;
     uint256 totalinBasket;
     uint256 totalmintToken;
+    uint256 weightbar;
     string aXedrasId;
     string finessbar;
     string URL;
@@ -94,6 +95,7 @@ contract NFTBasket is minting_1 {
       tokenId: uint24(tokenId),
       totalinBasket: uint256(totalinBasket),
       totalmintToken: uint256(totalmintToken),
+      weightbar: uint256(weightbar),
       finessbar: string(finessbar),
       URL: string(URL),
       aXedrasId: string(aXedrasId)
@@ -114,7 +116,7 @@ contract NFTBasket is minting_1 {
     string memory materialbar;
     string memory certificationbar;
     string memory URL;
-    while(0 < amount){
+    while(amount > 0){
       for (uint i = 0; i < basket_1_array.length; i++) {
         uint24 tokenId = uint24(basket_1_array[i]);
         (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
