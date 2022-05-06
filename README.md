@@ -20,6 +20,8 @@ Legally, the stakeholder owns the NFT, he can sell it directly if he finds an OT
 
 This is the first part of the projet which smart contract is in the folder NFT721.
 
+![erc721](https://user-images.githubusercontent.com/95071880/167142812-e8fe17f8-b3dd-4a77-baa0-ac7e181d0bff.png)
+
 The final contract is called "SMART_CONTRACT_AXNFT". There is a standard of Openzeppelin which is widely used, widespread and available as open source. This standard was used for the final contract to avoid errors and inefficiencies in the code. 
 
 However, before only taking the standard and implement it as such, it was tried to understand it. The NFT smart contract was then deployed from scratch. 
@@ -57,6 +59,8 @@ and issue ERC20 tokens which are easily exchangeable by their compliance with th
 <img width="841" alt="Capture d’écran 2022-05-06 à 15 31 58" src="https://user-images.githubusercontent.com/95071880/167141542-09e1ac23-bbc9-471f-8bac-11904a367743.png">
 
 The smart contract corresponding to this part of the solution can be found in the second folder "Basket and ERC20". 
+
+![basketerc20](https://user-images.githubusercontent.com/95071880/167142995-c5367654-cb53-4dcc-b78f-c41eef6c0ca5.png)
 
 The contracts to be studied are those starting with "SMART CONTRACT". The other contracts are trials that could not be implemented. 
 
