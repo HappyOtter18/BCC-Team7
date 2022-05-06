@@ -60,7 +60,7 @@ and issue ERC20 tokens which are easily exchangeable by their compliance with th
 
 The smart contract corresponding to this part of the solution can be found in the second folder "Basket and ERC20". 
 
-![basketerc20](https://user-images.githubusercontent.com/95071880/167142995-c5367654-cb53-4dcc-b78f-c41eef6c0ca5.png)
+![folder copie](https://user-images.githubusercontent.com/95071880/167143814-1e308703-7c8d-4c5f-8533-890ffa255439.png)
 
 The contracts to be studied are those starting with "SMART CONTRACT". The other contracts are trials that could not be implemented. 
 
