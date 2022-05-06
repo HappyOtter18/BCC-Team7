@@ -32,4 +32,7 @@ This contract keeps track of all the NFTs, so we can know what all the supply is
 The is a old and a new version of the enumerable contract. The old version was programmed from scratch, this incurred errors and was not very stable. 
 The version "new" use simply the OpenZeppelin standard and the whole was adapted to our code.
 
-Then there is a second folder in which is the Basket Contract
+Then there is a second folder "Baskets and ERC20" in which is the Basket Contract. The baskets group together NFTs of similar characteristics 
+and issue ERC20 tokens which are easily exchangeable by their compliance with the standard. 
+
+The contracts to be studied are those starting with "SMART CONTRACT". The other contracts are trials that could not be implemented. 
