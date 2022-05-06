@@ -136,19 +136,17 @@ contract NFTBasket is minting_1 {
     string memory certificationbar;
     string memory URL;
     require(amount >= 0, "not enough token");
-    while(amount >= 0){
-      for (uint i = 0; i < basket_1_array.length; i++) {
-        uint24 tokenId = uint24(basket_1_array[i]);
-        (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
-        if (weightbar <= amount) {
-          burnToken(weightbar);
-          amount = amount - weightbar;
-          NFTContract.transferFrom(address(this), msg.sender, tokenId); 
-          delete basket_1[tokenId];
-          remove(tokenId);
-          totalinBasket= totalinBasket-1;
-          totalmintToken = totalmintToken-weightbar;
-        }
+    for (uint i = 0; i < basket_1_array.length; i++) {
+      uint24 tokenId = uint24(basket_1_array[i]);
+      (URL, aXedrasId, finessbar, weightbar, provenancebar, materialbar, certificationbar) = NFTContract.tokendata(tokenId);
+      if (weightbar <= amount) {
+        burnToken(weightbar);
+        amount = amount - weightbar;
+        NFTContract.transferFrom(address(this), msg.sender, tokenId); 
+        delete basket_1[tokenId];
+        remove(tokenId);
+        totalinBasket= totalinBasket-1;
+        totalmintToken = totalmintToken-weightbar;
       }
     }
   }
@@ -176,3 +174,4 @@ contract NFTBasket is minting_1 {
   }
 
 }
+
