@@ -2,7 +2,10 @@
 
 This is a university project in the framework of the Blockchain challenge. 
 
-Our solution to tokenize gold in order to trade it afterwards on the blockchain. 
+Our project is to tokenize gold in order to trade it afterwards on the blockchain. The branding name is aXSolution. 
+
+![aXSolution](https://user-images.githubusercontent.com/95071880/167139689-473e18ca-e3cd-45a3-8c4f-e5839fab4e52.png)
+
 
 For reasons of anonymity, the company for which the project is being developed is referred to as "the company" below.
 
