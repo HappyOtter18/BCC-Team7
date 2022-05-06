@@ -68,7 +68,6 @@ contract AXNFT is ERC721Enumerable {
         require (msg.sender == aX, "you don't have the allowance to burn NFTs"); //Only the company, deployer of the contract can burn the Token
         _burn(_tokenId);
         
-
     }
 
 }
