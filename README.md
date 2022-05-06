@@ -48,6 +48,9 @@ This contract keeps track of all the NFTs, so we can know what all the supply is
 The is a old and a new version of the enumerable contract. The old version was programmed from scratch, this incurred errors and was not very stable. 
 The version "new" use simply the OpenZeppelin standard and the whole was adapted to our code.
 
+![image](https://user-images.githubusercontent.com/95071880/167144501-ac49e562-a675-4480-88b2-542aadb858e9.png)
+
+
 ## The second part of the solution
 
 If he wishes, the stakeholder can notify again his custodian, who can give aX-edras a basketing request. The responsible company puts the NFT into a basket, now the stake-holder gets ERC-20 Tokens through 
