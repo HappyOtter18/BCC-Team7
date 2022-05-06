@@ -33,6 +33,7 @@ This is the main contract, the one to be deployed to make all the contracts work
 The mint function is programmed to add metadata in each token
 There is also a function to see the metadata depending on the token id
 A function to burn tokens is also implemented
+All the caracteristics about the gold, URL, Company's unique ID, the metal, the weight, the finesse, the origin, the material (new, recycled or mixture), the certification (e.g., LBMA) are stored at the beginning of the contract. 
 
 2. Connector 
 This is the contract that links all the sub-contracts together. This is for ease of use
