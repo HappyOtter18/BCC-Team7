@@ -45,7 +45,7 @@ By minting the token, specific information about the underlying gold bar must be
     string[] private provenance;
     string[] private material;
     string[] private certification;
-
+```
 
 2. Connector 
 This is the contract that links all the sub-contracts together. This is for ease of use
