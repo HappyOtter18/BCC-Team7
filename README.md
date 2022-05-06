@@ -1,0 +1,61 @@
+# BCC-Team7
+
+This is a university project in the framework of the Blockchain challenge. 
+
+Our solution to tokenize gold in order to trade it afterwards on the blockchain. 
+
+For reasons of anonymity, the company for which the project is being developed is referred to as "the company" below.
+
+## The first part of our solution
+
+First, if a stakeholder of the responsible company such as an asset manager, has gold to trade on the blockchain, 
+he must request this to a registered custodian. The custodian verifies the existence of the physical gold. Now, the custodian requests the NFT minting to the company 
+over a dedicated website and send the information about the gold that is going to be minted. Then, the company interacts with the smart contract that will mint the requested NFT. 
+Legally, the stakeholder owns the NFT, he can sell it directly if he finds an OTC partner. 
+
+This is the first part of the projet which smart contract is in the folder NFT721.
+
+The final contract is called "SMART_CONTRACT_AXNFT". This contract use the OpenZeppelin Standard. It avoids error and respect the standard as it should be. 
+
+However, before only taking the standard and implement it as such, it was tried to understand it. The NFT smart contract was then deployed from scratch. 
+
+The NFT contract is broken down into 5 sub-contracts, in order to have a better visibility. 
+
+1. AXNFT
+This is the main contract, the one to be deployed to make all the contracts work 
+The mint function is programmed to add metadata in each token
+There is also a function to see the metadata depending on the token id
+A function to burn tokens is also implemented
+
+2. Connector 
+This is the contract that links all the sub-contracts together. This is for ease of use
+
+3. Metadata
+The basic information needed to deploy the NFT contract is stored here. 
+
+4. ERC721
+This contract implements the function to mint tokens but also all necessary standard functions of the ERC-721. 
+
+5. Enumerable
+This contract keeps track of all the NFTs, so we can know what all the supply is, who has which token, etc... 
+The is a old and a new version of the enumerable contract. The old version was programmed from scratch, this incurred errors and was not very stable. 
+The version "new" use simply the OpenZeppelin standard and the whole was adapted to our code.
+
+## The second part of the solution
+
+If he wishes, the stakeholder can notify again his custodian, who can give aX-edras a basketing request. The responsible company puts the NFT into a basket, now the stake-holder gets ERC-20 Tokens through 
+the custodian and has no access to the NFT anymore. The basket was divided into small parts, and each part corresponds to an ERC-20 token which can easily be exchanged and is very fungible. 
+A NFT, which represent a gold bar, will be transformed in many ERC-20 tokens, as one token represent one gram gold. But this one gram is not attributable to a specific gold bar but it is a part. 
+of the whole basket. The investor could therefore invest in the company's labelled gold in the form of a token. In a nutshell, the baskets group together NFTs of similar characteristics 
+and issue ERC20 tokens which are easily exchangeable by their compliance with the standard. 
+
+The smart contract corresponding to this part of the solution can be found in the second folder "Basket and ERC20". 
+
+The contracts to be studied are those starting with "SMART CONTRACT". The other contracts are trials that could not be implemented. 
+
+It contains two sub-smart contracts for each basket which all start with the name "NFTBasket" and "minting". 
+For example, there is one smart contract called NFTBasket_1 and one called minting_1. The minting smart contract uses the functions of the ERC-20 smart contract from openzeppelin to mint or burn the tokens.  
+The NFTBasket smart contract combines the different functions. It contains a structure, a mapping, a function to put the NFT into the basket, and two functions to get an NFT out by surrendering the respective tradable tokens. 
+In addition, an array is also created to better iterate and to better see what NFTs are in the basket.  The functions are also all named after the respective basket number. With the NFTBasket function, aXedras can put the NFT as 
+input into the respective basket by entering the tokenID and the owner's address. The NFT is then stored and held in the smart contract. In return, the owner re-ceives one token per gram of weight of the gold bar. 
+He can then exchange these tokens again for an NFT. In order for the company to be able to do this, the owner must first allow both the company and the smart contract with "approve".
