@@ -16,6 +16,8 @@ he must request this to a registered custodian. The custodian verifies the exist
 over a dedicated website and send the information about the gold that is going to be minted. Then, the company interacts with the smart contract that will mint the requested NFT. 
 Legally, the stakeholder owns the NFT, he can sell it directly if he finds an OTC partner. 
 
+<img width="766" alt="Capture d’écran 2022-05-06 à 15 30 11" src="https://user-images.githubusercontent.com/95071880/167141337-6f45c607-ce14-4325-a20d-444080874656.png">
+
 This is the first part of the projet which smart contract is in the folder NFT721.
 
 The final contract is called "SMART_CONTRACT_AXNFT". There is a standard of Openzeppelin which is widely used, widespread and available as open source. This standard was used for the final contract to avoid errors and inefficiencies in the code. 
@@ -51,6 +53,8 @@ the custodian and has no access to the NFT anymore. The basket was divided into 
 A NFT, which represent a gold bar, will be transformed in many ERC-20 tokens, as one token represent one gram gold. But this one gram is not attributable to a specific gold bar but it is a part. 
 of the whole basket. The investor could therefore invest in the company's labelled gold in the form of a token. In a nutshell, the baskets group together NFTs of similar characteristics 
 and issue ERC20 tokens which are easily exchangeable by their compliance with the standard. 
+
+<img width="841" alt="Capture d’écran 2022-05-06 à 15 31 58" src="https://user-images.githubusercontent.com/95071880/167141542-09e1ac23-bbc9-471f-8bac-11904a367743.png">
 
 The smart contract corresponding to this part of the solution can be found in the second folder "Basket and ERC20". 
 
