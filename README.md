@@ -18,7 +18,7 @@ Legally, the stakeholder owns the NFT, he can sell it directly if he finds an OT
 
 This is the first part of the projet which smart contract is in the folder NFT721.
 
-The final contract is called "SMART_CONTRACT_AXNFT". This contract use the OpenZeppelin Standard. It avoids error and respect the standard as it should be. 
+The final contract is called "SMART_CONTRACT_AXNFT". There is a standard of Openzeppelin which is widely used, widespread and available as open source. This standard was used for the final contract to avoid errors and inefficiencies in the code. 
 
 However, before only taking the standard and implement it as such, it was tried to understand it. The NFT smart contract was then deployed from scratch. 
 
