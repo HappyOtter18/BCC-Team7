@@ -9,21 +9,20 @@ contract minting_1 is ERC20, ERC20Burnable {
 
     constructor() ERC20("Basket_1_token", "B1") { }
 
-    function mint(address to, uint256 amount) external {
+    function mint(address to, uint256 amount) internal virtual {
         _mint(to, amount);
     }
 
-    function transferto(address sender, address recipient, uint256 amount) external {
+    function transferto(address sender, address recipient, uint256 amount) internal virtual {
         transferFrom(sender, recipient, amount);
     }
 
-    function burnToken(address account, uint256 amount) external {
-        burnFrom(account, amount);
+    function burnToken(uint256 amount) internal virtual {
+        burn(amount);
     }
-    
-    //approval for send token
-    function approvemint(address spender, uint256 amount) external {
-        approve(spender, amount);
+    function burnfrom(address account, uint256 amount)internal virtual {
+        burnFrom(account, amount);
     }
 
 }
+
