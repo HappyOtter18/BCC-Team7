@@ -69,17 +69,17 @@ contract NFTBasket is minting_1 {
   }
 
 
-//initializes the variables
+  //initializes the variables
   uint256 public totalmintToken = 0;  
   uint256 public totalinBasket = 0;
   mapping(uint256 => Basket_1) public basket_1; //maps the struct
   event NFTpacked(address owner, uint256 tokenId);
   
-//the main function of the smart contract 
-//it takes a NFT, controlls if it is a right one ande pack it into the Basket 1
-//Then it sends per gramm of weight a token to the owner of the NFT
-//befor that you must give a approve to the Smart Contract because it controls about that 
-//and the smart contract becomes the owner inside of the transferFrom funciton
+  //the main function of the smart contract 
+  //it takes a NFT, controlls if it is a right one and pack it into the Basket 1
+  //Then it sends per gramm of weight a token to the owner of the NFT
+  //before that you must give a approve to the Smart Contract because it controls about that 
+  //and the smart contract becomes the owner inside of the transferFrom function
   function packing_Basket_1(uint256 tokenId) public {
     require(NFTContract.ownerOf(tokenId) == msg.sender, "not your token"); 
     require(basket_1[tokenId].tokenId == 0, 'already staked');
@@ -126,7 +126,7 @@ contract NFTBasket is minting_1 {
 
 
   // funciton to get a NFT or various NFTs from the basket for a specific amount of Token
-  function unpack_NFT(uint256 amount) public {
+  function unpack_NFT_1(uint256 amount) public {
     //initialize the variables
     string memory aXedrasId;
     string memory finessbar;
@@ -153,7 +153,7 @@ contract NFTBasket is minting_1 {
 
 
   //function to get the NFT from the basket with a specific Token Id
-  function get_specificNFT(uint tokenId, uint amount) public {
+  function get_specificNFT_1(uint tokenId, uint amount) public {
     //initialize the variables
     string memory aXedrasId;
     string memory finessbar;
@@ -173,5 +173,6 @@ contract NFTBasket is minting_1 {
     totalmintToken = totalmintToken-weightbar;
   }
 
-}
+} 
+
 
