@@ -35,6 +35,18 @@ There is also a function to see the metadata depending on the token id
 A function to burn tokens is also implemented
 All the caracteristics about the gold, URL, Company's unique ID, the metal, the weight, the finesse, the origin, the material (new, recycled or mixture), the certification (e.g., LBMA) are stored at the beginning of the contract. 
 
+By minting the token, specific information about the underlying gold bar must be provided. In the code, these are stored as follow: 
+
+```
+    string[] private AXNFTz;
+    string[] private aXUniqueId;
+    string[] private finess;
+    uint256[] private weight;
+    string[] private provenance;
+    string[] private material;
+    string[] private certification;
+
+
 2. Connector 
 This is the contract that links all the sub-contracts together. This is for ease of use
 
