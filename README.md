@@ -66,7 +66,7 @@ The version "new" use simply the OpenZeppelin standard and the whole was adapted
 
 ## The second part of the solution
 
-If he wishes, the stakeholder can notify again his custodian, who can give aX-edras a basketing request. The responsible company puts the NFT into a basket, now the stake-holder gets ERC-20 Tokens through 
+If he wishes, the stakeholder can notify again his custodian, who can give the compnay a basketing request. The responsible company puts the NFT into a basket, now the stake-holder gets ERC-20 Tokens through 
 the custodian and has no access to the NFT anymore. The basket was divided into small parts, and each part corresponds to an ERC-20 token which can easily be exchanged and is very fungible. 
 A NFT, which represent a gold bar, will be transformed in many ERC-20 tokens, as one token represent one gram gold. But this one gram is not attributable to a specific gold bar but it is a part. 
 of the whole basket. The investor could therefore invest in the company's labelled gold in the form of a token. In a nutshell, the baskets group together NFTs of similar characteristics 
@@ -85,7 +85,7 @@ The second part of the solution is made out of two sub-smart contracts. For each
 The minting smart contract uses the functions of the ERC-20 smart contract from openzeppelin to mint or burn the tokens.  
 The NFTBasket smart contract combines the different functions. It contains a structure, a mapping, a function to put the NFT into the basket, and two functions to get an NFT out by surrendering the respective tradable tokens. With the "unpack_NFT_1" function, you can simply enter the amount of tokens you want to exchange and it will give you NFTs corresponding to that amount. With the "get_specificNFT_1" function, you can choose which NFT you want and therefore you have to enter both, the amount of tokens and the ID of the NFT. If the quantity is correct, you then get the specific NFT in return for the tokens. In addition to these functions, an array is also created to better iterate and to better see what NFTs are in the basket. The Array and the functions are also named after the respective basket number. 
 
-With the NFTBasket function, aXedras can put the NFT as input into the respective basket by entering the tokenID and the owner's address. The NFT is then stored and held in the smart contract. In return, the owner receives one token per gram of weight of the gold bar. He can then exchange these tokens again for an NFT. In order for aXedras to be able to do this, the owner must first allow both aXedras and the smart contract with "approve".
+With the NFTBasket function, the company can put the NFT as input into the respective basket by entering the tokenID and the owner's address. The NFT is then stored and held in the smart contract. In return, the owner receives one token per gram of weight of the gold bar. He can then exchange these tokens again for an NFT. In order for the company to be able to do this, the owner must first allow both the company and the smart contract with "approve".
 
 ![image](https://user-images.githubusercontent.com/95409842/167159851-83e18de2-86cc-4b54-8ac2-6e0392b10577.png)
 
